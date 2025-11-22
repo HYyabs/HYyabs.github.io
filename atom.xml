@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://HYyabs.github.io</id>
+    <title>Gridea</title>
+    <updated>2025-11-22T07:31:25.125Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://HYyabs.github.io"/>
+    <link rel="self" href="https://HYyabs.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://HYyabs.github.io/images/avatar.png</logo>
+    <icon>https://HYyabs.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2025, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[Windows 11完全卸载、安装Docker到运行详细教程]]></title>
+        <id>https://HYyabs.github.io/post/windows-11-wan-quan-xie-zai-an-zhuang-docker-dao-yun-xing-xiang-xi-jiao-cheng/</id>
+        <link href="https://HYyabs.github.io/post/windows-11-wan-quan-xie-zai-an-zhuang-docker-dao-yun-xing-xiang-xi-jiao-cheng/">
+        </link>
+        <updated>2025-11-21T17:48:44.000Z</updated>
+        <content type="html"><![CDATA[<p>Windows 11完全卸载、安装Docker到运行详细教程<br>
+一、完全卸载已安装的Docker</p>
+<p>如果你之前已安装过Docker，建议先彻底卸载，避免出现冲突：<br>
+1.1 常规卸载</p>
+<ol>
+<li>
+<p>打开&quot;设置&quot; &gt; &quot;应用&quot; &gt; &quot;已安装的应用&quot;</p>
+</li>
+<li>
+<p>找到&quot;Docker Desktop&quot;，点击&quot;⋮&quot; &gt; &quot;卸载&quot;</p>
+</li>
+<li>
+<p>按照提示完成卸载过程<br>
+1.2 清理残留文件<br>
+以管理员身份打开PowerShell，执行以下命令清除残留文件：<br>
+powershell<br>
+删除Docker残留文件<br>
+Remove-Item -Recurse -Force &quot;<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \Docker at position 17: …nv:LOCALAPPDATA\̲D̲o̲c̲k̲e̲r̲&quot;
+Remove-Item -…'>env:LOCALAPPDATA\Docker&quot;
+Remove-Item -Recurse -Force &quot;</span>env:APPDATA\Docker&quot;<br>
+Remove-Item -Recurse -Force &quot;<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \Docker at position 17: …nv:PROGRAMFILES\̲D̲o̲c̲k̲e̲r̲&quot;
+Remove-Item -…'>env:PROGRAMFILES\Docker&quot;
+Remove-Item -Recurse -Force &quot;</span>env:USERPROFILE.docker&quot;<br>
+1.3 重置WSL<br>
+如果需要，可以重置WSL配置：<br>
+powershell<br>
+wsl --shutdown<br>
+wsl --unregister DockerDesktopVM<br>
+wsl --unregister docker-desktop<br>
+wsl --unregister docker-desktop-data<br>
+二、环境准备<br>
+2.1 系统要求检查<br>
+Windows 11 64位（家庭版/专业版/企业版/教育版）<br>
+确保CPU支持硬件虚拟化<br>
+至少4GB内存（建议8GB或更多）<br>
+2.2 启用系统功能</p>
+</li>
+<li>
+<p>以管理员身份打开PowerShell：<br>
+按Win + X，选择&quot;Windows终端(管理员)&quot;</p>
+</li>
+<li>
+<p>启用WSL和虚拟机平台：<br>
+powershell<br>
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart<br>
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart</p>
+</li>
+<li>
+<p>重启电脑使设置生效<br>
+三、安装WSL2（适用于家庭版等没有Hyper-V的版本）<br>
+3.1 安装WSL2内核</p>
+</li>
+<li>
+<p>以管理员身份打开PowerShell，执行：<br>
+powershell<br>
+wsl --install</p>
+</li>
+</ol>
+<p>此命令会自动安装WSL2和默认的Ubuntu发行版</p>
+<ol start="2">
+<li>
+<p>如果已有WSL1，升级到WSL2：<br>
+powershell<br>
+wsl --set-default-version 2</p>
+</li>
+<li>
+<p>安装完成后重启电脑</p>
+</li>
+<li>
+<p>检查WSL状态：<br>
+powershell<br>
+wsl -l -v</p>
+</li>
+</ol>
+<p>预期输出：</p>
+<p>NAME STATE VERSION<br>
+Ubuntu Stopped 2</p>
+<p>3.2 设置WSL默认用户（可选）<br>
+安装Ubuntu后首次启动会要求创建用户名和密码，记住这些凭据。<br>
+四、安装Docker Desktop<br>
+4.1 下载安装包</p>
+<ol>
+<li>
+<p>访问<a href="https://www.docker.com/products/docker-desktop/">Docker官网</a></p>
+</li>
+<li>
+<p>点击&quot;Download for Windows&quot;下载最新版Docker Desktop安装程序<br>
+4.2 安装Docker Desktop</p>
+</li>
+<li>
+<p>双击下载的Docker Desktop Installer.exe</p>
+</li>
+<li>
+<p>按照安装向导，保持默认选项</p>
+</li>
+<li>
+<p>勾选&quot;Use WSL 2 instead of Hyper-V&quot;（重要！）</p>
+</li>
+<li>
+<p>完成安装后重启电脑<br>
+五、配置Docker<br>
+5.1 配置WSL2集成</p>
+</li>
+<li>
+<p>启动Docker Desktop</p>
+</li>
+<li>
+<p>点击系统托盘中的Docker图标，选择&quot;Settings&quot;</p>
+</li>
+<li>
+<p>导航至&quot;Resources&quot; &gt; &quot;WSL Integration&quot;</p>
+</li>
+<li>
+<p>勾选&quot;Enable integration with my default WSL distro&quot;（默认Ubuntu）</p>
+</li>
+<li>
+<p>点击&quot;Apply &amp; Restart&quot;<br>
+5.2 配置镜像加速器（中国大陆用户必备）</p>
+</li>
+<li>
+<p>前往<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">阿里云容器镜像服务</a>获取专属镜像加速地址（需要阿里云账号）</p>
+</li>
+<li>
+<p>在Docker Desktop设置中：<br>
+点击&quot;Settings&quot; &gt; &quot;Docker Engine&quot;<br>
+修改配置文件，添加镜像地址（替换为你的专属地址）：<br>
+json<br>
+{<br>
+&quot;builder&quot;: {<br>
+&quot;gc&quot;: {<br>
+&quot;defaultKeepStorage&quot;: &quot;20GB&quot;,<br>
+&quot;enabled&quot;: true<br>
+}<br>
+},<br>
+&quot;registry-mirrors&quot;: [&quot;https://xxxxxx.mirror.aliyuncs.com&quot;],<br>
+&quot;experimental&quot;: false,<br>
+&quot;debug&quot;: false<br>
+}</p>
+</li>
+<li>
+<p>点击&quot;Apply &amp; Restart&quot;应用设置<br>
+六、验证Docker安装<br>
+6.1 检查Docker版本<br>
+在PowerShell中执行：<br>
+powershell<br>
+docker --version</p>
+</li>
+</ol>
+<p>应显示类似：Docker version 24.0.7, build afdd53b<br>
+6.2 运行hello-world测试容器<br>
+powershell<br>
+docker run hello-world</p>
+<p>成功标志：看到&quot;Hello from Docker!&quot;消息<br>
+6.3 运行第一个实际容器（Nginx）<br>
+powershell<br>
+拉取Nginx镜像<br>
+docker pull nginx<br>
+运行Nginx容器<br>
+docker run -d -p 8080:80 --name my-nginx nginx<br>
+验证容器运行状态<br>
+docker ps</p>
+<p>打开浏览器访问http://localhost:8080，应看到Nginx欢迎页面。<br>
+七、常用Docker命令备忘</p>
+<p>powershell<br>
+查看运行中的容器<br>
+docker ps<br>
+查看所有容器（包括停止的）<br>
+docker ps -a<br>
+停止容器<br>
+docker stop my-nginx<br>
+启动已停止的容器<br>
+docker start my-nginx<br>
+删除容器<br>
+docker rm my-nginx<br>
+查看本地镜像<br>
+docker images<br>
+删除镜像<br>
+docker rmi nginx<br>
+查看容器日志<br>
+docker logs my-nginx<br>
+八、常见问题解决</p>
+<ol>
+<li>
+<p>Docker启动失败：<br>
+确认WSL2已正确安装和配置<br>
+检查虚拟化是否在BIOS中启用（任务管理器 &gt; 性能 &gt; CPU &gt; 虚拟化：已启用）</p>
+</li>
+<li>
+<p>权限问题：<br>
+确保以管理员身份运行PowerShell执行安装命令<br>
+WSL2中操作时可能需要使用sudo</p>
+</li>
+<li>
+<p>网络连接问题：<br>
+检查镜像加速器配置是否正确<br>
+防火墙可能会阻止Docker连接，临时禁用测试</p>
+</li>
+<li>
+<p>WSL2内存占用过高：<br>
+在用户目录创建或修改%UserProfile%.wslconfig文件：</p>
+</li>
+</ol>
+<p>[wsl2]<br>
+memory=4GB # 限制WSL2使用4GB内存<br>
+processors=2 # 限制使用2个CPU核心<br>
+swap=0 # 禁用交换空间</p>
+<p>九、扩展学习</p>
+<ol>
+<li>Docker Compose：用于定义和运行多容器Docker应用</li>
+<li>Dockerfile：编写自定义镜像构建文件</li>
+<li>数据卷管理：持久化容器数据</li>
+<li>容器网络：配置容器间通信</li>
+</ol>
+<p>这个指南涵盖了从完全卸载到运行第一个容器的完整流程。如果你遇到任何特定问题，可以根据错误信息进一步搜索解决方案。Docker是现代开发的重要工具，掌握它将大大提高你的开发效率！</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <id>https://HYyabs.github.io/post/hello-gridea/</id>
+        <link href="https://HYyabs.github.io/post/hello-gridea/">
+        </link>
+        <updated>2018-12-11T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="https://gridea.dev/">Gridea 主页</a><br>
+<a href="https://fehey.com/">示例网站</a></p>
+<h2 id="特性">特性👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>

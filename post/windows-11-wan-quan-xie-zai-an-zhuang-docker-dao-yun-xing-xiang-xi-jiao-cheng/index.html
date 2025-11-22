@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Windows 11完全卸载、安装Docker到运行详细教程 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://HYyabs.github.io/favicon.ico?v=1763796669453">
+<link rel="stylesheet" href="https://HYyabs.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Windows 11完全卸载、安装Docker到运行详细教程
+一、完全卸载已安装的Docker
+如果你之前已安装过Docker，建议先彻底卸载，避免出现冲突：
+1.1 常规卸载
+
+
+打开&quot;设置&quot; &gt; &quot;应..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://HYyabs.github.io">
+        <img src="https://HYyabs.github.io/images/avatar.png?v=1763796669453" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://HYyabs.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Windows 11完全卸载、安装Docker到运行详细教程</h2>
+            <div class="post-date">2025-11-22</div>
+            
+            <div class="post-content" v-pre>
+              <p>Windows 11完全卸载、安装Docker到运行详细教程<br>
+一、完全卸载已安装的Docker</p>
+<p>如果你之前已安装过Docker，建议先彻底卸载，避免出现冲突：<br>
+1.1 常规卸载</p>
+<ol>
+<li>
+<p>打开&quot;设置&quot; &gt; &quot;应用&quot; &gt; &quot;已安装的应用&quot;</p>
+</li>
+<li>
+<p>找到&quot;Docker Desktop&quot;，点击&quot;⋮&quot; &gt; &quot;卸载&quot;</p>
+</li>
+<li>
+<p>按照提示完成卸载过程<br>
+1.2 清理残留文件<br>
+以管理员身份打开PowerShell，执行以下命令清除残留文件：<br>
+powershell<br>
+删除Docker残留文件<br>
+Remove-Item -Recurse -Force &quot;<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \Docker at position 17: …nv:LOCALAPPDATA\̲D̲o̲c̲k̲e̲r̲&quot;
+Remove-Item -…'>env:LOCALAPPDATA\Docker&quot;
+Remove-Item -Recurse -Force &quot;</span>env:APPDATA\Docker&quot;<br>
+Remove-Item -Recurse -Force &quot;<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \Docker at position 17: …nv:PROGRAMFILES\̲D̲o̲c̲k̲e̲r̲&quot;
+Remove-Item -…'>env:PROGRAMFILES\Docker&quot;
+Remove-Item -Recurse -Force &quot;</span>env:USERPROFILE.docker&quot;<br>
+1.3 重置WSL<br>
+如果需要，可以重置WSL配置：<br>
+powershell<br>
+wsl --shutdown<br>
+wsl --unregister DockerDesktopVM<br>
+wsl --unregister docker-desktop<br>
+wsl --unregister docker-desktop-data<br>
+二、环境准备<br>
+2.1 系统要求检查<br>
+Windows 11 64位（家庭版/专业版/企业版/教育版）<br>
+确保CPU支持硬件虚拟化<br>
+至少4GB内存（建议8GB或更多）<br>
+2.2 启用系统功能</p>
+</li>
+<li>
+<p>以管理员身份打开PowerShell：<br>
+按Win + X，选择&quot;Windows终端(管理员)&quot;</p>
+</li>
+<li>
+<p>启用WSL和虚拟机平台：<br>
+powershell<br>
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart<br>
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart</p>
+</li>
+<li>
+<p>重启电脑使设置生效<br>
+三、安装WSL2（适用于家庭版等没有Hyper-V的版本）<br>
+3.1 安装WSL2内核</p>
+</li>
+<li>
+<p>以管理员身份打开PowerShell，执行：<br>
+powershell<br>
+wsl --install</p>
+</li>
+</ol>
+<p>此命令会自动安装WSL2和默认的Ubuntu发行版</p>
+<ol start="2">
+<li>
+<p>如果已有WSL1，升级到WSL2：<br>
+powershell<br>
+wsl --set-default-version 2</p>
+</li>
+<li>
+<p>安装完成后重启电脑</p>
+</li>
+<li>
+<p>检查WSL状态：<br>
+powershell<br>
+wsl -l -v</p>
+</li>
+</ol>
+<p>预期输出：</p>
+<p>NAME STATE VERSION<br>
+Ubuntu Stopped 2</p>
+<p>3.2 设置WSL默认用户（可选）<br>
+安装Ubuntu后首次启动会要求创建用户名和密码，记住这些凭据。<br>
+四、安装Docker Desktop<br>
+4.1 下载安装包</p>
+<ol>
+<li>
+<p>访问<a href="https://www.docker.com/products/docker-desktop/">Docker官网</a></p>
+</li>
+<li>
+<p>点击&quot;Download for Windows&quot;下载最新版Docker Desktop安装程序<br>
+4.2 安装Docker Desktop</p>
+</li>
+<li>
+<p>双击下载的Docker Desktop Installer.exe</p>
+</li>
+<li>
+<p>按照安装向导，保持默认选项</p>
+</li>
+<li>
+<p>勾选&quot;Use WSL 2 instead of Hyper-V&quot;（重要！）</p>
+</li>
+<li>
+<p>完成安装后重启电脑<br>
+五、配置Docker<br>
+5.1 配置WSL2集成</p>
+</li>
+<li>
+<p>启动Docker Desktop</p>
+</li>
+<li>
+<p>点击系统托盘中的Docker图标，选择&quot;Settings&quot;</p>
+</li>
+<li>
+<p>导航至&quot;Resources&quot; &gt; &quot;WSL Integration&quot;</p>
+</li>
+<li>
+<p>勾选&quot;Enable integration with my default WSL distro&quot;（默认Ubuntu）</p>
+</li>
+<li>
+<p>点击&quot;Apply &amp; Restart&quot;<br>
+5.2 配置镜像加速器（中国大陆用户必备）</p>
+</li>
+<li>
+<p>前往<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">阿里云容器镜像服务</a>获取专属镜像加速地址（需要阿里云账号）</p>
+</li>
+<li>
+<p>在Docker Desktop设置中：<br>
+点击&quot;Settings&quot; &gt; &quot;Docker Engine&quot;<br>
+修改配置文件，添加镜像地址（替换为你的专属地址）：<br>
+json<br>
+{<br>
+&quot;builder&quot;: {<br>
+&quot;gc&quot;: {<br>
+&quot;defaultKeepStorage&quot;: &quot;20GB&quot;,<br>
+&quot;enabled&quot;: true<br>
+}<br>
+},<br>
+&quot;registry-mirrors&quot;: [&quot;https://xxxxxx.mirror.aliyuncs.com&quot;],<br>
+&quot;experimental&quot;: false,<br>
+&quot;debug&quot;: false<br>
+}</p>
+</li>
+<li>
+<p>点击&quot;Apply &amp; Restart&quot;应用设置<br>
+六、验证Docker安装<br>
+6.1 检查Docker版本<br>
+在PowerShell中执行：<br>
+powershell<br>
+docker --version</p>
+</li>
+</ol>
+<p>应显示类似：Docker version 24.0.7, build afdd53b<br>
+6.2 运行hello-world测试容器<br>
+powershell<br>
+docker run hello-world</p>
+<p>成功标志：看到&quot;Hello from Docker!&quot;消息<br>
+6.3 运行第一个实际容器（Nginx）<br>
+powershell<br>
+拉取Nginx镜像<br>
+docker pull nginx<br>
+运行Nginx容器<br>
+docker run -d -p 8080:80 --name my-nginx nginx<br>
+验证容器运行状态<br>
+docker ps</p>
+<p>打开浏览器访问http://localhost:8080，应看到Nginx欢迎页面。<br>
+七、常用Docker命令备忘</p>
+<p>powershell<br>
+查看运行中的容器<br>
+docker ps<br>
+查看所有容器（包括停止的）<br>
+docker ps -a<br>
+停止容器<br>
+docker stop my-nginx<br>
+启动已停止的容器<br>
+docker start my-nginx<br>
+删除容器<br>
+docker rm my-nginx<br>
+查看本地镜像<br>
+docker images<br>
+删除镜像<br>
+docker rmi nginx<br>
+查看容器日志<br>
+docker logs my-nginx<br>
+八、常见问题解决</p>
+<ol>
+<li>
+<p>Docker启动失败：<br>
+确认WSL2已正确安装和配置<br>
+检查虚拟化是否在BIOS中启用（任务管理器 &gt; 性能 &gt; CPU &gt; 虚拟化：已启用）</p>
+</li>
+<li>
+<p>权限问题：<br>
+确保以管理员身份运行PowerShell执行安装命令<br>
+WSL2中操作时可能需要使用sudo</p>
+</li>
+<li>
+<p>网络连接问题：<br>
+检查镜像加速器配置是否正确<br>
+防火墙可能会阻止Docker连接，临时禁用测试</p>
+</li>
+<li>
+<p>WSL2内存占用过高：<br>
+在用户目录创建或修改%UserProfile%.wslconfig文件：</p>
+</li>
+</ol>
+<p>[wsl2]<br>
+memory=4GB # 限制WSL2使用4GB内存<br>
+processors=2 # 限制使用2个CPU核心<br>
+swap=0 # 禁用交换空间</p>
+<p>九、扩展学习</p>
+<ol>
+<li>Docker Compose：用于定义和运行多容器Docker应用</li>
+<li>Dockerfile：编写自定义镜像构建文件</li>
+<li>数据卷管理：持久化容器数据</li>
+<li>容器网络：配置容器间通信</li>
+</ol>
+<p>这个指南涵盖了从完全卸载到运行第一个容器的完整流程。如果你遇到任何特定问题，可以根据错误信息进一步搜索解决方案。Docker是现代开发的重要工具，掌握它将大大提高你的开发效率！</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://HYyabs.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
